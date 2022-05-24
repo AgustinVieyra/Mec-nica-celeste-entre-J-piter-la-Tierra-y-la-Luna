@@ -1,52 +1,110 @@
-
 %<Constantes y valores iniciales del programa>
-G=6.67*10^-11;
-	%Jupiter
+G=1.94*10^-7;
+
+	%Valores de Júpiter: masa, posición, velocidad y aceleración inicial (de acuerdo a las componentes x & y)
 m_J=317.827;
 r_J0=[0,0];
 r_J=r_J0;
-                	%r_J=[r_J0;[1,2]]
 v_J0=[0,0];
 v_J=v_J0;
 a_J=[0,0];
-	%Tierra
+
+
+	% Valores de la Tierra: masa, posición, velocidad y aceleración inicial (de acuerdo a las componentes x & y)
 m_T=1;
 r_T0=[52.78,0];
 r_T=[r_T0];
 v_T0=[0.0013151,0];
 v_T=[v_T0];
 a_T=[0,0];
-	%Luna
+
+
+	%Valores de la Luna: masa, posición, velocidad y aceleración inicial (de acuerdo a las componentes x & y)
 m_L=0.0123;
 r_L0=[82.51,0];
 r_L=[r_L0];
 v_L0=[0,8.04*10^-5];
 v_L=[v_L0];
 a_L=[0,0];
+
 	%Diferencial del tiempo para la simulación
  dt=60;
  n=1000;
- %<\Constantes y valores iniciales del programa>
+
+%<\Constantes y valores iniciales del programa>
  
+
+
 %LAS ECUACIONES DE MOVIMIENTO
 for i=2:n
+
 	%JUPITER
- a_J=[a_J;[m_T/((r_J(i-1,1)-r_T(i-1,1))^2+(r_J(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,1)-r_J(i-1,1)) + m_L/((r_J(i-1,1)-r_L(i-1,1))^2+(r_J(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,1)-r_J(i-1,1)) , m_T/((r_J(i-1,1)-r_T(i-1,1))^2+(r_J(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,2)-r_J(i-1,2)) + m_L/((r_J(i-1,1)-r_L(i-1,1))^2+(r_J(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,2)-r_J(i-1,2))]];
+%Aceleración de Júpiter
+    a_J=
+	[a_J;
+		[m_T/((r_J(i-1,1)-r_T(i-1,1))^2+(r_J(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,1)-r_J(i-1,1))
+		+
+		m_L/((r_J(i-1,1)-r_L(i-1,1))^2+(r_J(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,1)-r_J(i-1,1))
+		,
+		m_T/((r_J(i-1,1)-r_T(i-1,1))^2+(r_J(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,2)-r_J(i-1,2))
+		+
+		m_L/((r_J(i-1,1)-r_L(i-1,1))^2+(r_J(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,2)-r_J(i-1,2))
+	]
+    ];
+
+%Velocidad de Júpiter
     v_J=[v_J;[v_J(i-1,1)+dt*G*a_J(i,1),v_J(i-1,2)+dt*G*a_J(i,2)]];
+
+%Posición de Júpiter
     r_J=[r_J;[r_J(i-1,1)+v_J(i,1)*dt,r_J(i-1,2)+v_J(i,2)*dt]];
+
   	
+
 	%TIERRA
-    a_T=[a_T;[m_J/((r_T(i-1,1)-r_J(i-1,1))^2+(r_T(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,1)-r_T(i-1,1)) + m_L/((r_T(i-1,1)-r_L(i-1,1))^2+(r_T(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,1)-r_T(i-1,1)) , m_J/((r_T(i-1,1)-r_J(i-1,1))^2+(r_T(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,2)-r_T(i-1,2)) + m_L/((r_T(i-1,1)-r_L(i-1,1))^2+(r_T(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,2)-r_T(i-1,2))]];
+%Aceleración de la Tierra
+    a_T=
+	[a_T;
+		[m_J/((r_T(i-1,1)-r_J(i-1,1))^2+(r_T(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,1)-r_T(i-1,1))
+		+
+		m_L/((r_T(i-1,1)-r_L(i-1,1))^2+(r_T(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,1)-r_T(i-1,1))
+		,
+		m_J/((r_T(i-1,1)-r_J(i-1,1))^2+(r_T(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,2)-r_T(i-1,2))
+		+
+		m_L/((r_T(i-1,1)-r_L(i-1,1))^2+(r_T(i-1,2)-r_L(i-1,2))^2)^(3/2)*(r_L(i-1,2)-r_T(i-1,2))
+	]
+    ];
+
+%Velocidad de la Tierra
     v_T=[v_T;[v_T(i-1,1)+dt*G*a_T(i,1),v_T(i-1,2)+dt*G*a_T(i,2)]];
+
+%Posición de la Tierra
     r_T=[r_T;[r_T(i-1,1)+v_T(i,1)*dt,r_T(i-1,2)+v_T(i,2)*dt]];
 	
+
+
 	%LUNA
-    a_L=[a_L;[m_J/((r_L(i-1,1)-r_J(i-1,1))^2+(r_L(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,1)-r_L(i-1,1)) + m_T/((r_L(i-1,1)-r_T(i-1,1))^2+(r_L(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,1)-r_L(i-1,1)) , m_J/((r_L(i-1,1)-r_J(i-1,1))^2+(r_L(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,2)-r_L(i-1,2)) + m_T/((r_L(i-1,1)-r_T(i-1,1))^2+(r_L(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,2)-r_L(i-1,2))]];
+%Aceleración de la Luna
+    a_L=
+	[a_L;
+		[m_J/((r_L(i-1,1)-r_J(i-1,1))^2+(r_L(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,1)-r_L(i-1,1))
+		+
+		m_T/((r_L(i-1,1)-r_T(i-1,1))^2+(r_L(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,1)-r_L(i-1,1))
+		,
+		m_J/((r_L(i-1,1)-r_J(i-1,1))^2+(r_L(i-1,2)-r_J(i-1,2))^2)^(3/2)*(r_J(i-1,2)-r_L(i-1,2))
+		+
+		m_T/((r_L(i-1,1)-r_T(i-1,1))^2+(r_L(i-1,2)-r_T(i-1,2))^2)^(3/2)*(r_T(i-1,2)-r_L(i-1,2))
+	]
+    ];
+
+%Velocidad de la Luna
     v_L=[v_L;[v_L(i-1,1)+dt*G*a_L(i,1),v_L(i-1,2)+dt*G*a_L(i,2)]];
+
+%Posición de la Luna
     r_L=[r_L;[r_L(i-1,1)+v_L(i,1)*dt,r_L(i-1,2)+v_L(i,2)*dt]];
+
 end
  
-%Posiciones a graficar
+%Posiciones a graficar (guardando en vectores individuales las componentes de las posiciones)
 r_Jx=r_J(:,1);
 r_Jy=r_J(:,2);
 r_Tx=r_T(:,1);
@@ -55,6 +113,7 @@ r_Lx=r_L(:,1);
 r_Ly=r_L(:,2);
  
 'Plot ready'
+%Grafica de cada una de las posiciones de los planetas:
 %plot(r_Jx,r_Jy,"m")
 plot(r_Tx,r_Ty,"g")
 %plot(r_Lx,r_Ly,"b")
